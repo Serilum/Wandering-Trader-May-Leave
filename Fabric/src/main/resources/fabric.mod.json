@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "wanderingtradermayleave",
-  "version": "1.0",
+  "version": "1.1",
 
   "name": "Wandering Trader May Leave",
   "description": "Adds a button to the Wandering Trader's screen which makes it disappear without violence.",
@@ -26,7 +26,7 @@
     "fabric": "*",
     "minecraft": ">=1.20",
     "java": ">=17",
-    "collective": ">=7.93"
+    "collective": ">=8.3"
   },
 
   "custom": {
@@ -48,8 +48,6 @@
 	  " Andrean Olgo",
 	  " aternosorg",
 	  " Cherriesaurus",
-	  " David Sanchez",
-	  " drdog111",
 	  " Michael W. S.",
 	  " t128",
 	  " Tyler Behl",
