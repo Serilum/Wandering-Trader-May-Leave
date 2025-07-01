@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.natamus.wanderingtradermayleave.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "WanderingTraderSpawnerInvoker"
+  ],
+  "client": [
+    "MerchantScreenMixin"
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
