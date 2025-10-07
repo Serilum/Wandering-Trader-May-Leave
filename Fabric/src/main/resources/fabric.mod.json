@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "wanderingtradermayleave",
+  "version": "1.1",
+
+  "name": "Wandering Trader May Leave",
+  "description": "Adds a button to the Wandering Trader's screen which makes it disappear without violence.",
+  "authors": [ "Rick South" ],
+  "contact": {
+    "homepage": "https://serilum.com/mod/wandering-trader-may-leave",
+    "sources": "https://github.com/Serilum/Wandering-Trader-May-Leave",
+    "issues": "https://github.com/Serilum/.issue-tracker/labels/Mod:%20Wandering%20Trader%20May%20Leave"
+  },
+
+  "license": "All Right Reserved",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": { "main": [ "com.natamus.wanderingtradermayleave.ModFabric" ], "client": [ "com.natamus.wanderingtradermayleave.ModFabricClient" ], "modmenu": [ "com.natamus.wanderingtradermayleave.fabric.config.IntegrateModMenu" ] },
+  "mixins": [
+    "wanderingtradermayleave.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": "*",
+    "minecraft": ">=1.21",
+    "java": ">=21",
+    "collective": ">=8.8"
+  },
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Donate <3" : "https://ricksouth.com/donate"
+      }
+    }
+  },
+
+  "contributors": [
+	  " ",
+	  "Thank you very much to my Membership sponsors for supporting the development of this mod!",
+	  " ",
+	  "If you would like to contribute too, check out https://serilum.com/donate.",
+	  " ",
+	  "Membership sponsors:",
+	  " Alister",
+	  " Andrean Olgo",
+	  " aternosorg",
+	  " Cherriesaurus",
+	  " Michael W. S.",
+	  " t128",
+	  " Tyler Behl",
+	  " XAgent",
+	  " ตัวตรึง พระนคร"
+  ]
+}
