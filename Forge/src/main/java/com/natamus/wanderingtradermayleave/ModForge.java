@@ -5,7 +5,6 @@ import com.natamus.collective.check.ShouldLoadCheck;
 import com.natamus.wanderingtradermayleave.forge.config.IntegrateForgeConfig;
 import com.natamus.wanderingtradermayleave.forge.events.ForgeCommandRegisterEvent;
 import com.natamus.wanderingtradermayleave.util.Reference;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;

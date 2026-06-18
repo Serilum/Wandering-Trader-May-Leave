@@ -26,7 +26,7 @@ public class Util {
             (button) -> {
                 Dispatcher.sendToServer(new ToServerMakeWanderingTraderLeavePacket());
 
-                Minecraft.getInstance().setScreen(null);
+                Minecraft.getInstance().gui.setScreen(null);
             }
         );
 
