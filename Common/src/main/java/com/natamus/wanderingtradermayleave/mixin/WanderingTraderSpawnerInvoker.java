@@ -5,7 +5,7 @@ import net.minecraft.world.entity.npc.wanderingtrader.WanderingTraderSpawner;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(WanderingTraderSpawner.class)
+@Mixin(value = WanderingTraderSpawner.class, priority = 1001)
 	public interface WanderingTraderSpawnerInvoker {
 		@Invoker("spawn")
 		boolean invokeSpawn(ServerLevel serverLevel);
