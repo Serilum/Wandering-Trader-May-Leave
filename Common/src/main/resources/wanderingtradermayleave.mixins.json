@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.natamus.wanderingtradermayleave.mixin",
+  "package": "com.serilum.wanderingtradermayleave.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "WanderingTraderSpawnerInvoker"
