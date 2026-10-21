@@ -1,9 +1,9 @@
 package com.serilum.wanderingtradermayleave.networking.packets;
 
-import com.natamus.collective.implementations.networking.api.Dispatcher;
 import com.natamus.collective.implementations.networking.data.PacketContext;
 import com.natamus.collective.implementations.networking.data.Side;
 import com.serilum.wanderingtradermayleave.config.ConfigHandler;
+import com.serilum.wanderingtradermayleave.util.LeaveUtil;
 import com.serilum.wanderingtradermayleave.util.Reference;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.Identifier;
@@ -18,14 +18,20 @@ import net.minecraft.world.phys.Vec3;
 public class ToServerMakeWanderingTraderLeavePacket {
 	public static final Identifier CHANNEL = Identifier.fromNamespaceAndPath(Reference.MOD_ID, "to_server_make_wandering_trader_leave");
 
-	public ToServerMakeWanderingTraderLeavePacket() {
+	private final int merchantId;
+
+	public ToServerMakeWanderingTraderLeavePacket(int merchantIdIn) {
+		this.merchantId = merchantIdIn;
 	}
 
 	public static ToServerMakeWanderingTraderLeavePacket decode(FriendlyByteBuf buf) {
-		return new ToServerMakeWanderingTraderLeavePacket();
+		int merchantIdIn = buf.readInt();
+
+		return new ToServerMakeWanderingTraderLeavePacket(merchantIdIn);
 	}
 
 	public void encode(FriendlyByteBuf buf) {
+		buf.writeInt(merchantId);
 	}
 
 	public static void handle(PacketContext<ToServerMakeWanderingTraderLeavePacket> ctx) {
@@ -36,16 +42,23 @@ public class ToServerMakeWanderingTraderLeavePacket {
 			Level level = serverPlayer.level();
 			Vec3 pVec = serverPlayer.position();
 
+			Entity merchant = level.getEntity(packet.merchantId);
+			if (merchant == null || !LeaveUtil.mayLeave(merchant)) {
+				return;
+			}
+
+			if (!(merchant instanceof WanderingTrader)) {
+				if (merchant.distanceTo(serverPlayer) <= 10) {
+					LeaveUtil.makeLeave(serverPlayer, merchant);
+				}
+				return;
+			}
+
 			if (ConfigHandler.despawnTraderLlamasToo) {
 				for (Entity entity : level.getEntitiesOfClass(TraderLlama.class, new AABB(pVec.x - 10, pVec.y - 10, pVec.z - 10, pVec.x + 10, pVec.y + 10, pVec.z + 10))) {
 					if (entity instanceof TraderLlama traderLlama ) {
 						if (traderLlama.getLeashHolder() instanceof WanderingTrader || !ConfigHandler.onlyDespawnLlamasWhenLeashed) {
-							traderLlama.removeLeash();
-							traderLlama.remove(Entity.RemovalReason.DISCARDED);
-
-							if (ConfigHandler.showDespawnParticles) {
-								Dispatcher.sendToClient(new ToClientShowPoofParticlesPacket(traderLlama.getX(), traderLlama.getY(), traderLlama.getZ()), serverPlayer);
-							}
+							LeaveUtil.makeTraderLlamaLeave(serverPlayer, traderLlama);
 						}
 					}
 				}
@@ -53,13 +66,7 @@ public class ToServerMakeWanderingTraderLeavePacket {
 
 			for (Entity entity : level.getEntitiesOfClass(WanderingTrader.class, new AABB(pVec.x - 10, pVec.y - 10, pVec.z - 10, pVec.x + 10, pVec.y + 10, pVec.z + 10))) {
 				if (entity instanceof WanderingTrader wanderingTrader) {
-					wanderingTrader.setTradingPlayer(null);
-
-					wanderingTrader.setDespawnDelay(1);
-
-					if (ConfigHandler.showDespawnParticles) {
-						Dispatcher.sendToClient(new ToClientShowPoofParticlesPacket(wanderingTrader.getX(), wanderingTrader.getY(), wanderingTrader.getZ()), serverPlayer);
-					}
+					LeaveUtil.makeLeave(serverPlayer, wanderingTrader);
 				}
 			}
 		}
